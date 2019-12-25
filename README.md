@@ -1,9 +1,11 @@
 # TwentyFourCalculator
-A command line tool to find solution to the game of giving 4 playing cards and compute 24 from them
+A command line tool to find solution to the game of giving 4 playing cards and computing 24 from them
 
 The rules of the game are:
-1. Only basic simple operators including +-*/ are allowed, () can be possibly added
+1. Only basic simple operators including +-*/ are allowed, and () can be possibly added
 2. Each number can only be used once
+
+Use this tool if you want the computer to find a solution for you.
 
 How to run:
 1. Install Python (The code is written and tested in python 3)
