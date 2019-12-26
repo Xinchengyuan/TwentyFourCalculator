@@ -37,6 +37,17 @@ def alternateMerge(tp1, tp2):
  return res
 
 """
+Utility Function that evalutes a string expression and handle divide by 0
+"""
+def calcExpression(expr):
+  result=0
+  try:
+    result= eval(expr)
+  except ZeroDivisionError:
+    result=0
+  return result
+
+"""
 Case A:
     a +-*/ b +-*/ c +-*/ d
 lst: a list of permutations of input numbers
@@ -46,12 +57,12 @@ def computeCaseA(lst):
     global found
     for perm in lst:
       if found == True:
-               break
+              break
       for operm in product (opr, repeat=3):
         if found == True:
-               break  
+              break  
         expression=alternateMerge(perm, operm)
-        if eval(expression)==24:
+        if calcExpression(expression)==24:
           found=True
           break
 
@@ -63,25 +74,26 @@ lst: a list of permutations of numbers
 def computeCaseB(lst): 
     global expression
     global found
+   
     for perm in lst: 
       if found == True:
-               break
+              break
       part1 = "("+ perm[0]
       for tmpop in plMn:
-         if found == True:
-               break
-         part2 = tmpop + perm[1]+ ")"
-         for tpop in prDv:
-           if found == True:
-               break
-           part3= tpop + perm[2]
-           for ops in opr:
+        if found == True:
+              break
+        part2 = tmpop + perm[1]+ ")"
+        for tpop in prDv:
+          if found == True:
+              break
+          part3= tpop + perm[2]
+          for ops in opr:
               part4= ops+ perm[3]
               expression=part1+part2+part3+part4           
-              if eval(expression)==24:
-                 found=True
-                 break
- 
+              if calcExpression(expression)==24:
+                found=True
+                break
+   
 """
 Case C:
     a -/ (b +- c) +-*/ d
@@ -90,32 +102,33 @@ lst: a list of permutations of numbers
 def computeCaseC(lst): 
     global expression
     global found
+   
     for perm in lst: 
       if found == True:
-               break
+              break
       for tmpop in mnDv:
-         if found == True:
-               break
-         part1 = perm[0]+ tmpop
-         for tpop in plMn:
-           if found == True:
-               break
-           part2 ="("+perm[1]+tpop+perm[2]+")"
-           if tmpop == "-":         
-               for ops in prDv:
+        if found == True:
+              break
+        part1 = perm[0]+ tmpop
+        for tpop in plMn:
+          if found == True:
+              break
+          part2 ="("+perm[1]+tpop+perm[2]+")"
+          if tmpop == "-":         
+              for ops in prDv:
                   part3= ops+ perm[3]
                   expression=part1+part2+part3
-                  if eval(expression)==24:
-                     found=True
-                     break
-           elif tmpop == "/":
-               for ops in opr:
+                  if calcExpression(expression)==24:
+                    found=True
+                    break
+          elif tmpop == "/":
+              for ops in opr:
                   part3 = ops+ perm[3]
                   expression=part1+part2+part3
-                  if eval(expression)==24:
-                     found=True
-                     break
-
+                  if calcExpression(expression)==24:
+                    found=True
+                    break
+   
 """
 Case D:
     a - / b */ (c +- d)
@@ -124,24 +137,25 @@ lst: a list of permutations of numbers
 def computeCaseD(lst): 
     global expression
     global found
+    
     for perm in lst: 
       if found == True:
-               break
+              break
       for tmpop in mnDv:
-         if found == True:
-               break
-         part1 = perm[0]+ tmpop 
-         for tpop in prDv:
-           if found == True:
-               break
-           part2=perm[1]+tpop+"("+perm[2]
-           for ops in plMn:         
-             part3= ops+ perm[3] +")"
-             expression=part1+part2+part3
-             if eval(expression)==24:
+        if found == True:
+              break
+        part1 = perm[0]+ tmpop 
+        for tpop in prDv:
+          if found == True:
+              break
+          part2=perm[1]+tpop+"("+perm[2]
+          for ops in plMn:         
+            part3= ops+ perm[3] +")"
+            expression=part1+part2+part3
+            if calcExpression(expression)==24:
                 found=True
                 break
-
+  
 """
 Case E:
     (a +-*/ b +-*/ c) */ d
@@ -150,37 +164,38 @@ lst: a list of permutations of numbers
 def computeCaseE(lst): 
     global expression
     global found
+   
     for perm in lst: 
       if found == True:
-               break
+              break
       part1 ="("+ perm[0]
       for tmpop in opr:
-         if found == True:
-               break
-         part2 = tmpop + perm[1]
-         if tmpop=="+" or tmpop=="-":
-           for tpop in opr:
-             if found == True:
-               break
-             part2 = tpop+perm[2]+")"
-             for ops in prDv:
-               part3 = ops+perm[3]
-               expression=part1+part2+part3
-               if eval(expression)==24:
+        if found == True:
+              break
+        part2 = tmpop + perm[1]
+        if tmpop=="+" or tmpop=="-":
+          for tpop in opr:
+            if found == True:
+              break
+            part3 = tpop+perm[2]+")"
+            for ops in prDv:
+              part4 = ops+perm[3]
+              expression=part1+part2+part3+part4
+              if calcExpression(expression)==24:
                 found=True
                 break
-         else:
-           for tmpop in plMn:
-             if found == True:
-               break
-             part2 =tpop+perm[2]+")"
-             for ops in prDv:
-               part3 = ops+perm[3]
-               expression=part1+part2+part3
-               if eval(expression)==24:
+        else:
+          for tmpop in plMn:
+            if found == True:
+              break
+            part3 =tpop+perm[2]+")"
+            for ops in prDv:
+              part4 = ops+perm[3]
+              expression=part1+part2+part3+part4
+              if calcExpression(expression)==24:
                 found=True
                 break
- 
+
 """
 Case F:
     a / (b +-*/ c +-*/ d)
@@ -189,28 +204,29 @@ lst: a list of permutations of numbers
 def computeCaseF(lst): 
     global expression
     global found
+
     for perm in lst:
       if found == True:
-               break
+              break
       part1 = perm[0]+ "/"+"("+perm[1]
       for tmpop in opr:
-         if found == True:
-               break
-         part2 = tmpop+perm[2]
-         if tmpop=="+" or tmpop=="-":
-           for tpop in opr:
-             part3 = tpop+perm[3]+")"
-             expression=part1+part2+part3
-             if eval(expression)==24:
+        if found == True:
+              break
+        part2 = tmpop+perm[2]
+        if tmpop=="+" or tmpop=="-":
+          for tpop in opr:
+            part3 = tpop+perm[3]+")"
+            expression=part1+part2+part3
+            if calcExpression(expression)==24:
                 found=True
                 break 
-         else:
-           for tmpop in plMn:         
-             part3 = tpop+perm[3]+")"
-             expression=part1+part2+part3
-             if eval(expression)==24:
-               found=True
-               break
+        else:
+          for tmpop in plMn:         
+            part3 = tpop+perm[3]+")"
+            expression=part1+part2+part3
+            if calcExpression(expression)==24:
+              found=True
+              break
            
 """
 Case G:
@@ -220,25 +236,26 @@ lst: a list of permutations of numbers
 def computeCaseG(lst): 
     global expression
     global found
+    
     for perm in lst:
       if found == True:
-               break
+              break
       part1 = "("+perm[0]
       for tmpop in plMn:
-         if found == True:
-               break
-         part2 = tmpop+perm[2]+")"
-         for tpop in prDv:
-           if found == True:
-               break
-           part3 = tpop+"("+perm[3]
-           for ops in plMn:
-            part4 = ops+perm[4]+")"
+        if found == True:
+              break
+        part2 = tmpop+perm[1]+")"
+        for tpop in prDv:
+          if found == True:
+              break
+          part3 = tpop+"("+perm[2]
+          for ops in plMn:
+            part4 = ops+perm[3]+")"
             expression=part1+part2+part3+part4
-            if eval(expression)==24:
+            if calcExpression(expression)==24:
               found=True
               break
-
+          
 def calcTwentyFour(numLst):
    perms = list(permutations(numLst))
    global found
@@ -274,8 +291,9 @@ def calcTwentyFour(numLst):
               return "No solution exists."   
              
    
+#perms = list(permutations(["9","2","2","5"]))
+#computeCaseE(perms)
 
-#perms = ["8","10","3","4"]
 #print(calcTwentyFour(perms))
 
 if len(sys.argv)!=5:
